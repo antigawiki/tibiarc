@@ -176,7 +176,13 @@ void Player::ResetInterface() {
     AddChatTab(DefaultChannel, "Default");
 
     if (Gamestate->Version.AtLeast(8, 20)) {
+        if (NPCChannel.isHidden()) {
+            NPCChannel.show();
+        }
+
         AddChatTab(NPCChannel, "NPC");
+    } else {
+        NPCChannel.hide();
     }
 }
 
