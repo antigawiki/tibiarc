@@ -35,8 +35,6 @@
 #include <QStandardPaths>
 #include <QTemporaryFile>
 
-#include <format>
-
 namespace trc {
 namespace GUI {
 
@@ -126,15 +124,14 @@ void Window::ImportRecordings(const QStringList &roots) {
     Database.resetModel();
 
     if (imported.isValid() && size != imported.result()) {
-        QMessageBox::warning(
-                this,
-                "Failed to import recordings",
-                std::format("Failed to import {} out of {} recordings, "
-                            "they're either corrupt or you're lacking "
-                            "appropriate data files.",
-                            size - imported.result(),
-                            size)
-                        .c_str());
+        QMessageBox::warning(this,
+                             "Failed to import recordings",
+                             Format("Failed to import {} out of {} recordings, "
+                                    "they're either corrupt or you're lacking "
+                                    "appropriate data files.",
+                                    size - imported.result(),
+                                    size)
+                                     .c_str());
     }
 
 #ifdef EMSCRIPTEN
@@ -162,11 +159,11 @@ void Window::ImportData(const QStringList &roots) {
         QMessageBox::warning(
                 this,
                 "Failed to import data",
-                std::format("Failed to import {} out of {} versions, the data "
-                            "files were either corrupt or for unsupported "
-                            "versions.",
-                            size - loaded.result(),
-                            size)
+                Format("Failed to import {} out of {} versions, the data "
+                       "files were either corrupt or for unsupported "
+                       "versions.",
+                       size - loaded.result(),
+                       size)
                         .c_str());
     }
 

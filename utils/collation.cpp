@@ -123,9 +123,9 @@ void ParseDenyList(const std::filesystem::path &path, DenyList &result) {
                 result.emplace(checksum);
             }
         } catch (const std::string &reason) {
-            throw std::format("error: failed to parse deny-list, line {}: {}",
-                              index,
-                              reason);
+            throw Format("error: failed to parse deny-list, line {}: {}",
+                         index,
+                         reason);
         }
     }
 }

@@ -25,8 +25,6 @@
 #include <QGraphicsPixmapItem>
 #include <QScrollBar>
 
-#include <format>
-
 namespace trc {
 namespace GUI {
 
@@ -464,22 +462,22 @@ void Player::AddChatMessage(QTextEdit &editor,
             event.Mode,
             [this, seconds, &event](QTextCursor &cursor) {
                 if (event.AuthorLevel > 0) {
-                    cursor.insertText(std::format("+{:%H:%M:%S} {} [{}]: {}",
-                                                  seconds,
-                                                  CharacterSet::ToPrintableUtf8(
-                                                          event.AuthorName),
-                                                  event.AuthorLevel,
-                                                  CharacterSet::ToPrintableUtf8(
-                                                          event.Message))
-                                              .c_str());
+                    cursor.insertText(
+                            Format("+{:%H:%M:%S} {} [{}]: {}",
+                                   seconds,
+                                   CharacterSet::ToPrintableUtf8(
+                                           event.AuthorName),
+                                   event.AuthorLevel,
+                                   CharacterSet::ToPrintableUtf8(event.Message))
+                                    .c_str());
                 } else {
-                    cursor.insertText(std::format("+{:%H:%M:%S} {}: {}",
-                                                  seconds,
-                                                  CharacterSet::ToPrintableUtf8(
-                                                          event.AuthorName),
-                                                  CharacterSet::ToPrintableUtf8(
-                                                          event.Message))
-                                              .c_str());
+                    cursor.insertText(
+                            Format("+{:%H:%M:%S} {}: {}",
+                                   seconds,
+                                   CharacterSet::ToPrintableUtf8(
+                                           event.AuthorName),
+                                   CharacterSet::ToPrintableUtf8(event.Message))
+                                    .c_str());
                 }
             });
 }
@@ -539,12 +537,11 @@ void Player::ProcessEvent(std::chrono::milliseconds timestamp,
     AddChannelText(DefaultChannel,
                    event.Mode,
                    [this, seconds, &event](QTextCursor &cursor) {
-                       cursor.insertText(
-                               std::format("+{:%H:%M:%S} {}",
-                                           seconds,
-                                           CharacterSet::ToPrintableUtf8(
-                                                   event.Message))
-                                       .c_str());
+                       cursor.insertText(Format("+{:%H:%M:%S} {}",
+                                                seconds,
+                                                CharacterSet::ToPrintableUtf8(
+                                                        event.Message))
+                                                 .c_str());
                    });
 }
 

@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
         std::filesystem::create_directories(root);
     }
 
-    QLockFile lock((root / "lock").c_str());
+    QLockFile lock((root / "lock").generic_string().c_str());
 
     if (!lock.tryLock()) {
         /* FIXME: ask user to delete lock file? */

@@ -87,4 +87,28 @@ struct NotSupportedError : public ErrorBase {
 };
 } // namespace trc
 
+/* Compatibility shim for the lack of std::format under MinGW, using the
+ * largely compatible fmtlib instead which is provided by MXE. */
+#ifdef DISABLE_FMT_LIB
+#    include <format>
+
+namespace trc {
+template <typename... Args>
+auto Format(std::format_string<Args...> fmt, Args &&...args) {
+    return std::format(fmt, std::forward<Args>(args)...);
+}
+} // namespace trc
+
+#else
+#    include <fmt/format.h>
+#    include <fmt/chrono.h>
+
+namespace trc {
+template <typename... Args>
+auto Format(fmt::format_string<Args...> fmt, Args &&...args) {
+    return fmt::format(fmt, std::forward<Args>(args)...);
+}
+} // namespace trc
+#endif
+
 #endif /* __TRC_COMMON_HPP__ */

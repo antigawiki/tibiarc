@@ -25,8 +25,6 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
-#include <format>
-
 namespace trc {
 namespace GUI {
 
@@ -156,11 +154,10 @@ Collection::Collection(GUI::Database &database, QWidget *parent)
         QString destination = QFileDialog::getSaveFileName(
                 this,
                 "Save recording as ...",
-                std::format("recording{}", formatName.Extension.string())
-                        .c_str(),
-                std::format("{} recording (*{})",
-                            formatName.Long,
-                            formatName.Extension.string())
+                Format("recording{}", formatName.Extension.string()).c_str(),
+                Format("{} recording (*{})",
+                       formatName.Long,
+                       formatName.Extension.string())
                         .c_str());
 
         if (!destination.isEmpty()) {

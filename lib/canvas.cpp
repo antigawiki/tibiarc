@@ -496,7 +496,9 @@ void Canvas::Dump(const std::filesystem::path &path) const {
     uint32_t u32;
     uint16_t u16;
 
-    FILE *bmp = fopen(path.c_str(), "wb");
+    FILE *bmp = fopen(
+            reinterpret_cast<const char *>(path.generic_u8string().c_str()),
+            "wb");
 
     /* File header. */
     fwrite("BM", 2, 1, bmp);

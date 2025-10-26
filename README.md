@@ -81,10 +81,22 @@ The following should install everything except `qt6` on Debian and derived
 distros like Ubuntu:
 
 ```
-$ sudo apt install binutils clang cmake libavcodec-dev libavformat-dev libavutil-dev libsdl2-dev libssl-dev libswscale-dev make pkg-config zlib1g-dev libtbb-dev
+$ sudo apt install binutils \
+       clang \
+       cmake \
+       libavcodec-dev \
+       libavformat-dev \
+       libavutil-dev \
+       libsdl2-dev \
+       libssl-dev \
+       libswscale-dev \
+       libtbb-dev \
+       make \
+       pkg-config \
+       zlib1g-dev
 ```
 
-`qt6` must be installed through the `Qt` installer to work reliably, as the
+`qt6` should be installed through the `Qt` installer to work reliably, as the
 version provided by package managers is generally older than the required 6.9.
 
 Then jump into the project folder and run the following commands, if all goes
@@ -104,30 +116,41 @@ First, build the MXE cross-compilation environment if you haven't already, and
 set up the required packages:
 
 ```
+$ # See https://mxe.cc/#requirements for all required dependencies, they have
+$ # one-liners for package installation on most platforms.
+$
 $ git clone https://github.com/mxe/mxe.git
 $ cd mxe
 $ make -j MXE_TARGETS='x86_64-w64-mingw32.static' \
        ffmpeg \
        openssl \
+       qt6 \
        sdl2 \
        x264 \
        x265 \
-       zlib \
-       intel-tbb
+       zlib
 ```
 
-Then build `tibiarc` with the MXE toolchain:
+Keep in mind that this will take a very long time, perhaps even several hours
+depending on your hardware, so you may want to run a few errands while it's
+building.
+
+Then build `tibiarc` with the MXE toolchain. Make sure to set the
+`MXE_DIRECTORY` environment variable to the directory that you built MXE in
+before running the following commands:
 
 ```
 $ export PATH=$MXE_DIRECTORY/usr/bin:$PATH
 $ mkdir build
 $ cd build
-$ x86_64-w64-mingw32.static-cmake -DTIBIARC_CROSSCOMPILING=On \
-                                  -DTIBIARC_NO_TBB=On ..
+$ x86_64-w64-mingw32.static-cmake \
+       -DTIBIARC_CROSSCOMPILING=On \
+       -DTIBIARC_NO_TBB=On \
+       ..
 $ make
 ```
 
-Assuming this worked, you should now have a bunch of executables (`player.exe`
+Assuming this worked, you should now have a bunch of executables (`gui.exe`
 and so on) in the build folder with all dependencies statically linked.
 
 ### Windows

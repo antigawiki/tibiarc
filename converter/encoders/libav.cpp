@@ -29,9 +29,21 @@ namespace Encoding {
  * from our native BGR24. */
 static void SetBestPixelFormat(const AVCodec *codec, AVCodecContext *context) {
     enum AVPixelFormat best_format = AV_PIX_FMT_NONE;
+    const enum AVPixelFormat *out_configs;
+    int num_configs;
 
-    for (int i = 0; codec->pix_fmts[i] != AV_PIX_FMT_NONE; i++) {
-        enum AVPixelFormat candidate_format = codec->pix_fmts[i];
+    if (avcodec_get_supported_config(
+                context,
+                codec,
+                AV_CODEC_CONFIG_PIX_FORMAT,
+                0,
+                reinterpret_cast<const void **>(&out_configs),
+                &num_configs) < 0) {
+        throw NotSupportedError();
+    }
+
+    for (int i = 0; i < num_configs; i++) {
+        enum AVPixelFormat candidate_format = out_configs[i];
         [[maybe_unused]] int loss;
 
         best_format = av_find_best_pix_fmt_of_2(best_format,
@@ -64,10 +76,11 @@ static void SetBestPixelFormat(const AVCodec *codec, AVCodecContext *context) {
         break;
     }
 
-    context->pix_fmt = best_format;
     if (best_format == AV_PIX_FMT_NONE) {
         throw NotSupportedError();
     }
+
+    context->pix_fmt = best_format;
 }
 
 LibAV::LibAV(const std::string &format,

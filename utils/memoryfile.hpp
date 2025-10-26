@@ -29,7 +29,9 @@
 
 #if defined(_WIN32)
 extern "C" {
-#    define NOMINMAX
+#    ifndef NOMINMAX
+#        define NOMINMAX
+#    endif
 #    include <windows.h>
 }
 #endif

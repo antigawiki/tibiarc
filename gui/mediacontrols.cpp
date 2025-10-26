@@ -22,6 +22,8 @@
 #include <QPainter>
 #include <QStyleOptionSlider>
 
+#include "utils.hpp"
+
 namespace trc {
 namespace GUI {
 
@@ -78,16 +80,15 @@ MediaControls::MediaControls(QWidget *parent)
     Progress.setInvertedAppearance(false);
     Progress.setInvertedControls(true);
 
-    Progress.setFormatter([]([[maybe_unused]] int min,
-                             int max,
-                             int value) -> QString {
-        auto elapsed = std::chrono::milliseconds(value),
-             runtime = std::chrono::milliseconds(max);
-        return std::format("{:%H:%M:%S} / {:%H:%M:%S}",
-                           std::chrono::floor<std::chrono::seconds>(elapsed),
-                           std::chrono::floor<std::chrono::seconds>(runtime))
-                .c_str();
-    });
+    Progress.setFormatter(
+            []([[maybe_unused]] int min, int max, int value) -> QString {
+                auto elapsed = std::chrono::milliseconds(value),
+                     runtime = std::chrono::milliseconds(max);
+                return Format("{:%H:%M:%S} / {:%H:%M:%S}",
+                              std::chrono::floor<std::chrono::seconds>(elapsed),
+                              std::chrono::floor<std::chrono::seconds>(runtime))
+                        .c_str();
+            });
 
     Layout.addWidget(&Progress, 0, 2, 1, 1);
 
