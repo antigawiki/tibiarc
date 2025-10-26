@@ -421,7 +421,7 @@ int main(int argc, char **argv) {
     std::vector<Collation::RecordingFile> accepted;
 
     for (const auto &file : recordings) {
-        if (denyList.contains(file.Checksum)) {
+        if (!denyList.contains(file.Checksum)) {
             accepted.push_back(file);
         }
     }
