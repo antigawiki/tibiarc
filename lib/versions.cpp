@@ -39,7 +39,6 @@
 #include <bit>
 #include <cstddef>
 #include <cstdlib>
-#include <format>
 
 namespace trc {
 
@@ -638,17 +637,16 @@ void Version::DumpItems() {
         DUMP_PROPERTY(Write);
         DUMP_PROPERTY(WriteOnce);
 
-        canvas.Dump(std::format("items/{}.bmp", i));
+        canvas.Dump(Format("items/{}.bmp", i));
     }
 }
 #endif
 
 VersionTriplet::operator std::string() const {
-    return std::format(
-            "{}.{}{}",
-            Major,
-            Minor,
-            (Preview > 0 ? std::format(".{}", Preview) : std::string()));
+    return Format("{}.{}{}",
+                  Major,
+                  Minor,
+                  (Preview > 0 ? Format(".{}", Preview) : std::string()));
 }
 
 VersionBase::VersionBase(const VersionTriplet &triplet)

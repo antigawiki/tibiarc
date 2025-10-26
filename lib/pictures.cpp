@@ -25,7 +25,6 @@
 #include "versions.hpp"
 
 #include <cstdlib>
-#include <format>
 #include <type_traits>
 
 #include "utils.hpp"
@@ -87,7 +86,7 @@ PictureFile::PictureFile(const VersionBase &version, DataReader data)
 
 #ifdef DUMP_PIC
     for (const auto &[index, canvas] : Pictures) {
-        canvas.Dump(std::format("pict_{}.bmp", std::to_underlying(index)));
+        canvas.Dump(Format("pict_{}.bmp", std::to_underlying(index)));
     }
 #endif
 }

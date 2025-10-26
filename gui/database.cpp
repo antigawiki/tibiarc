@@ -25,7 +25,6 @@
 
 #include <algorithm>
 #include <chrono>
-#include <format>
 #include <fstream>
 #include <ranges>
 #include <sstream>
@@ -234,8 +233,7 @@ std::pair<size_t, Database::Future<size_t>> Database::ImportDataFiles(
                             if (added) {
                                 std::filesystem::copy_file(
                                         data->Path,
-                                        *root / std::format("{}",
-                                                            data->Signature),
+                                        *root / Format("{}", data->Signature),
                                         std::filesystem::copy_options::
                                                 overwrite_existing);
                             }
@@ -285,11 +283,9 @@ std::pair<size_t, Database::Future<size_t>> Database::ImportRecordingFiles(
                                 std::filesystem::copy_file(
                                         file.Path,
                                         VideoDirectory /
-                                                std::format(
-                                                        "{}",
-                                                        static_cast<
-                                                                std::string>(
-                                                                file.Checksum)),
+                                                Format("{}",
+                                                       static_cast<std::string>(
+                                                               file.Checksum)),
                                         std::filesystem::copy_options::
                                                 overwrite_existing);
                                 VideoFiles.emplace(file.Checksum, metadata);
@@ -324,11 +320,11 @@ std::pair<size_t, Database::Future<size_t>> Database::LoadData() {
                         const auto &[triplet, signatures] = pair;
 
                         const MemoryFile dat(DatDirectory /
-                                             std::format("{}", signatures.Dat));
+                                             Format("{}", signatures.Dat));
                         const MemoryFile pic(PicDirectory /
-                                             std::format("{}", signatures.Pic));
+                                             Format("{}", signatures.Pic));
                         const MemoryFile spr(SprDirectory /
-                                             std::format("{}", signatures.Spr));
+                                             Format("{}", signatures.Spr));
 
                         /* Note that we cannot use `std::unique_ptr` since
                          * `QtConcurrent` requires copyable values. */
@@ -501,7 +497,7 @@ QVariant Database::data(const QModelIndex &index, int role) const {
         } else if (index.column() == 2) {
             auto runtime =
                     std::chrono::floor<std::chrono::seconds>(metadata.Runtime);
-            return QVariant(std::format("{:%H:%M:%S}", runtime).c_str());
+            return QVariant(Format("{:%H:%M:%S}", runtime).c_str());
         }
     }
 

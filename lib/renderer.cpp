@@ -33,7 +33,6 @@
 
 #include <cmath>
 #include <cstdlib>
-#include <format>
 #include <initializer_list>
 #include <tuple>
 
@@ -1038,13 +1037,12 @@ static void DrawInventoryItem(Gamestate &gamestate,
 
         if ((type.Properties.Stackable || type.Properties.Rune) &&
             item.ExtraByte > 1) {
-            TextRenderer::DrawRightAlignedString(
-                    version.Fonts.Game,
-                    Pixel(0xBF, 0xBF, 0xBF),
-                    X + 32,
-                    Y + 22,
-                    std::format("{}", item.ExtraByte),
-                    canvas);
+            TextRenderer::DrawRightAlignedString(version.Fonts.Game,
+                                                 Pixel(0xBF, 0xBF, 0xBF),
+                                                 X + 32,
+                                                 Y + 22,
+                                                 Format("{}", item.ExtraByte),
+                                                 canvas);
         }
     }
 }
@@ -1217,7 +1215,7 @@ static void DrawNumericalEffects(Gamestate &gamestate,
                                              Convert8BitColor(effect.Color),
                                              textCenterX,
                                              textCenterY,
-                                             std::format("{}", effect.Value),
+                                             Format("{}", effect.Value),
                                              canvas);
         }
     } while (effectIdx != tile.NumericalIndex);
@@ -1777,7 +1775,7 @@ static bool DrawMessages(const Options &options,
                         messageColor,
                         centerX,
                         bottomY,
-                        std::format("{} {}:", message->Author, messagePrefix),
+                        Format("{} {}:", message->Author, messagePrefix),
                         canvas);
             }
         }
@@ -2017,25 +2015,23 @@ void DrawStatusBars(Gamestate &gamestate,
                     11);
     }
 
-    TextRenderer::DrawCenteredString(
-            version.Fonts.Game,
-            Pixel(0xFF, 0xFF, 0xFF),
-            statusBarX + 2 + icons.HealthBar.Width / 2,
-            statusBarY + 2,
-            std::format("{} / {}",
-                        gamestate.Player.Stats.Health,
-                        gamestate.Player.Stats.MaxHealth),
-            canvas);
+    TextRenderer::DrawCenteredString(version.Fonts.Game,
+                                     Pixel(0xFF, 0xFF, 0xFF),
+                                     statusBarX + 2 + icons.HealthBar.Width / 2,
+                                     statusBarY + 2,
+                                     Format("{} / {}",
+                                            gamestate.Player.Stats.Health,
+                                            gamestate.Player.Stats.MaxHealth),
+                                     canvas);
 
-    TextRenderer::DrawCenteredString(
-            version.Fonts.Game,
-            Pixel(0xFF, 0xFF, 0xFF),
-            statusBarX + 2 + icons.ManaBar.Width / 2,
-            statusBarY + 15,
-            std::format("{} / {}",
-                        gamestate.Player.Stats.Mana,
-                        gamestate.Player.Stats.MaxMana),
-            canvas);
+    TextRenderer::DrawCenteredString(version.Fonts.Game,
+                                     Pixel(0xFF, 0xFF, 0xFF),
+                                     statusBarX + 2 + icons.ManaBar.Width / 2,
+                                     statusBarY + 15,
+                                     Format("{} / {}",
+                                            gamestate.Player.Stats.Mana,
+                                            gamestate.Player.Stats.MaxMana),
+                                     canvas);
 
     /* Update the render position */
     baseY += 18 + icons.EmptyStatusBar.Height;
@@ -2101,7 +2097,7 @@ void DrawInventoryArea(Gamestate &gamestate,
                 Pixel(0xAF, 0xAF, 0xAF),
                 16 + baseX + 17,
                 baseY + 10,
-                std::format("{}", gamestate.Player.Stats.SoulPoints),
+                Format("{}", gamestate.Player.Stats.SoulPoints),
                 canvas);
     }
 
@@ -2123,7 +2119,7 @@ void DrawInventoryArea(Gamestate &gamestate,
                                      Pixel(0xAF, 0xAF, 0xAF),
                                      16 + baseX + 90,
                                      baseY + 10,
-                                     std::format("{}", capacity),
+                                     Format("{}", capacity),
                                      canvas);
 
     /* Update the render position */
@@ -2251,7 +2247,7 @@ void DrawSkills(Gamestate &gamestate,
                                              Pixel(0xBF, 0xBF, 0xBF),
                                              rightX,
                                              baseY + 2,
-                                             std::format("{}", value),
+                                             Format("{}", value),
                                              canvas);
         baseY += version.Fonts.InterfaceLarge.Height;
     };

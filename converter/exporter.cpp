@@ -28,7 +28,6 @@
 #include "versions.hpp"
 
 #include <algorithm>
-#include <format>
 #include <iostream>
 
 #include "utils.hpp"
@@ -298,11 +297,11 @@ static void ConvertVideo(
             encoder.WriteFrame(outputCanvas);
 
             if ((frameTimestamp.count() % 500) == 0) {
-                std::cout << std::format("progress: {:%H:%M:%S} / {:%H:%M:%S} "
-                                         "/ {:%H:%M:%S}",
-                                         frameTimestamp,
-                                         startTime,
-                                         endTime)
+                std::cout << Format("progress: {:%H:%M:%S} / {:%H:%M:%S} "
+                                    "/ {:%H:%M:%S}",
+                                    frameTimestamp,
+                                    startTime,
+                                    endTime)
                           << std::endl;
             }
         } while (frameTimestamp <=

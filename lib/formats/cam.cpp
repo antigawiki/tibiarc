@@ -22,7 +22,9 @@
 #include "versions.hpp"
 
 #ifdef _WIN32
-#    define NOMINMAX
+#    ifndef NOMINMAX
+#        define NOMINMAX
+#    endif
 #endif
 
 extern "C" {
