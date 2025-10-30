@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
             argv,
             "tibiarc-miner -- a program for converting Tibia packet captures "
             "to JSON",
-            "tibiarc-miner 0.3",
+            "tibiarc-miner 0.4",
             {"data_folder", "input_path"},
             {
                     {"end-time",
@@ -136,109 +136,142 @@ int main(int argc, char **argv) {
                      {"skips creature update events (e.g. movement, health)",
                       {},
                       [&]([[maybe_unused]] const CLI::Range &args) {
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureGuildMembersUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureHeadingUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureHealthUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureImpassableUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureLightUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureMoved);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureNPCCategoryUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureOutfitUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreaturePvPHelpersUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureShieldUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureSkullUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureSpeedUpdated);
+                          for (const auto event :
+                               {Events::Type::CreatureGuildMembersUpdated,
+                                Events::Type::CreatureHeadingUpdated,
+                                Events::Type::CreatureHealthUpdated,
+                                Events::Type::CreatureImpassableUpdated,
+                                Events::Type::CreatureLightUpdated,
+                                Events::Type::CreatureMoved,
+                                Events::Type::CreatureNPCCategoryUpdated,
+                                Events::Type::CreatureOutfitUpdated,
+                                Events::Type::CreaturePvPHelpersUpdated,
+                                Events::Type::CreatureShieldUpdated,
+                                Events::Type::CreatureSkullUpdated,
+                                Events::Type::CreatureSpeedUpdated}) {
+                              settings.SkippedEvents.insert(event);
+                          }
                       }}},
                     {"skip-effects",
                      {"skips effect events (e.g. missiles, poofs)",
                       {},
                       [&]([[maybe_unused]] const CLI::Range &args) {
-                          settings.SkippedEvents.insert(
-                                  Events::Type::GraphicalEffectPopped);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::NumberEffectPopped);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::MissileFired);
+                          for (const auto event :
+                               {Events::Type::GraphicalEffectPopped,
+                                Events::Type::NumberEffectPopped,
+                                Events::Type::MissileFired}) {
+                              settings.SkippedEvents.insert(event);
+                          }
                       }}},
                     {"skip-inventory",
                      {"skips inventory events (e.g. containers)",
                       {},
                       [&]([[maybe_unused]] const CLI::Range &args) {
-                          settings.SkippedEvents.insert(
-                                  Events::Type::ContainerAddedItem);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::ContainerClosed);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::ContainerOpened);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::ContainerRemovedItem);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::ContainerTransformedItem);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::PlayerInventoryUpdated);
+                          for (const auto event :
+                               {Events::Type::ContainerAddedItem,
+                                Events::Type::ContainerClosed,
+                                Events::Type::ContainerOpened,
+                                Events::Type::ContainerRemovedItem,
+                                Events::Type::ContainerTransformedItem,
+                                Events::Type::PlayerInventoryUpdated}) {
+                              settings.SkippedEvents.insert(event);
+                          }
                       }}},
                     {"skip-messages",
                      {"skips message events",
                       {},
                       [&]([[maybe_unused]] const CLI::Range &args) {
-                          settings.SkippedEvents.insert(
-                                  Events::Type::ChannelClosed);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::ChannelListUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::ChannelOpened);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureSpoke);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureSpokeInChannel);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::CreatureSpokeOnMap);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::StatusMessageReceived);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::StatusMessageReceivedInChannel);
+                          for (const auto event :
+                               {Events::Type::ChannelClosed,
+                                Events::Type::ChannelListUpdated,
+                                Events::Type::ChannelOpened,
+                                Events::Type::CreatureSpoke,
+                                Events::Type::CreatureSpokeInChannel,
+                                Events::Type::CreatureSpokeOnMap,
+                                Events::Type::StatusMessageReceived,
+                                Events::Type::StatusMessageReceivedInChannel}) {
+                              settings.SkippedEvents.insert(event);
+                          }
                       }}},
                     {"skip-player-updates",
                      {"skips player update events (e.g. movement, skills)",
                       {},
                       [&]([[maybe_unused]] const CLI::Range &args) {
-                          settings.SkippedEvents.insert(
-                                  Events::Type::PlayerBlessingsUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::PlayerDataBasicUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::PlayerDataUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::PlayerHotkeyPresetUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::PlayerMoved);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::PlayerSkillsUpdated);
+                          for (const auto event :
+                               {Events::Type::PlayerBlessingsUpdated,
+                                Events::Type::PlayerDataBasicUpdated,
+                                Events::Type::PlayerDataUpdated,
+                                Events::Type::PlayerHotkeyPresetUpdated,
+                                Events::Type::PlayerMoved,
+                                Events::Type::PlayerSkillsUpdated}) {
+                              settings.SkippedEvents.insert(event);
+                          }
                       }}},
                     {"skip-terrain",
                      {"skips terrain events",
                       {},
                       [&]([[maybe_unused]] const CLI::Range &args) {
-                          settings.SkippedEvents.insert(
-                                  Events::Type::TileUpdated);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::TileObjectAdded);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::TileObjectRemoved);
-                          settings.SkippedEvents.insert(
-                                  Events::Type::TileObjectTransformed);
+                          for (const auto event :
+                               {Events::Type::TileUpdated,
+                                Events::Type::TileObjectAdded,
+                                Events::Type::TileObjectRemoved,
+                                Events::Type::TileObjectTransformed}) {
+                              settings.SkippedEvents.insert(event);
+                          }
+                      }}},
+                    {"terrain-only",
+                     {"skips everything but terrain events (suitable for map "
+                      "tracking)",
+                      {},
+                      [&]([[maybe_unused]] const CLI::Range &args) {
+                          for (const auto event :
+                               {Events::Type::WorldInitialized,
+                                Events::Type::AmbientLightChanged,
+                                Events::Type::CreatureMoved,
+                                Events::Type::CreatureRemoved,
+                                Events::Type::CreatureSeen,
+                                Events::Type::CreatureHealthUpdated,
+                                Events::Type::CreatureHeadingUpdated,
+                                Events::Type::CreatureLightUpdated,
+                                Events::Type::CreatureOutfitUpdated,
+                                Events::Type::CreatureSpeedUpdated,
+                                Events::Type::CreatureSkullUpdated,
+                                Events::Type::CreatureShieldUpdated,
+                                Events::Type::CreatureImpassableUpdated,
+                                Events::Type::CreaturePvPHelpersUpdated,
+                                Events::Type::CreatureGuildMembersUpdated,
+                                Events::Type::CreatureTypeUpdated,
+                                Events::Type::CreatureNPCCategoryUpdated,
+                                Events::Type::PlayerMoved,
+                                Events::Type::PlayerInventoryUpdated,
+                                Events::Type::PlayerBlessingsUpdated,
+                                Events::Type::PlayerDied,
+                                Events::Type::PlayerHotkeyPresetUpdated,
+                                Events::Type::PlayerDataBasicUpdated,
+                                Events::Type::PlayerDataUpdated,
+                                Events::Type::PlayerSkillsUpdated,
+                                Events::Type::PlayerIconsUpdated,
+                                Events::Type::PlayerTacticsUpdated,
+                                Events::Type::PvPSituationsChanged,
+                                Events::Type::CreatureSpoke,
+                                Events::Type::CreatureSpokeOnMap,
+                                Events::Type::CreatureSpokeInChannel,
+                                Events::Type::ChannelListUpdated,
+                                Events::Type::ChannelOpened,
+                                Events::Type::ChannelClosed,
+                                Events::Type::PrivateConversationOpened,
+                                Events::Type::ContainerOpened,
+                                Events::Type::ContainerClosed,
+                                Events::Type::ContainerAddedItem,
+                                Events::Type::ContainerTransformedItem,
+                                Events::Type::ContainerRemovedItem,
+                                Events::Type::NumberEffectPopped,
+                                Events::Type::GraphicalEffectPopped,
+                                Events::Type::MissileFired,
+                                Events::Type::StatusMessageReceived,
+                                Events::Type::StatusMessageReceivedInChannel}) {
+                              settings.SkippedEvents.insert(event);
+                          }
                       }}},
                     {"dry-run",
                      {"suppress output while still generating it. This is only"
