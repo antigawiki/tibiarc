@@ -545,15 +545,15 @@ void Parser::ParseTileMoveCreature(DataReader &reader, EventList &events) {
 
 void Parser::ParseFullMapDescription(DataReader &reader, EventList &events) {
     auto &event = AddEvent<PlayerMoved>(events);
-
     event.Position = Position_ = ParsePosition(reader);
 
-    ParseMapDescription(reader,
-                        events,
-                        -8,
-                        -6,
-                        Map::TileBufferWidth,
-                        Map::TileBufferHeight);
+    // Guard: mini 0x64 packets (custom servers)
+    if (reader.Remaining() < 100) {
+        return;
+    }
+
+    ParseMapDescription(reader, events, -8, -6,
+                        Map::TileBufferWidth, Map::TileBufferHeight);
 }
 
 void Parser::ParseInitialization(DataReader &reader, EventList &events) {
